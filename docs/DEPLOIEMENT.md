@@ -47,6 +47,13 @@ DATABASE_URL="<url de production>" npx tsx scripts/create-admin.ts "Prénom Nom"
 
 Ne lancez **jamais** `npm run db:seed` en production : il efface les données. `SEED_DEMO=true`, lui, n'agit que sur une base sans aucun compte, mais n'a pas sa place sur l'instance réelle : retirez-le une fois les tests terminés.
 
+## En cas d'échec au démarrage
+
+Les logs de démarrage (*Deploy Logs* sur Railway) commencent par les lignes `[Palette]` :
+- `Démarrage impossible, configuration à corriger` liste les variables manquantes ou invalides ;
+- `Base injoignable (tentative n/10)` : l'app réessaie pendant 30 secondes, puis abandonne si la base reste injoignable (DATABASE_URL incorrecte, base arrêtée) ;
+- `Démarrage du serveur sur le port …` : l'app est lancée ; si le site ne répond pas, vérifier que le port du domaine public correspond.
+
 ## Vérifications après déploiement
 
 - `GET /api/health` répond `{"status":"ok"}`.

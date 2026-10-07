@@ -24,10 +24,11 @@ COPY --from=build /app/.next/static ./.next/static
 COPY --from=build /app/public ./public
 COPY --from=build /app/prisma ./prisma
 COPY --from=build /app/dist ./dist
+COPY --from=build /app/scripts/preflight.mjs /app/scripts/start.sh ./scripts/
 COPY --from=build /app/prisma-cli /opt/prisma-cli
 # Client Prisma généré (le moteur de requêtes) pour le serveur et le script de démo
 COPY --from=build /app/node_modules/.prisma ./node_modules/.prisma
 RUN mkdir -p /app/storage
 EXPOSE 3000
-# 1. migrations en attente  2. données de démo si SEED_DEMO=true et base vide  3. serveur
-CMD ["sh", "-c", "node /opt/prisma-cli/node_modules/prisma/build/index.js migrate deploy --schema prisma/schema.prisma && node dist/demo-on-empty.cjs && node server.js"]
+# Contrôle de configuration, migrations, données de démo si SEED_DEMO=true et base vide, puis serveur
+CMD ["sh", "scripts/start.sh"]
