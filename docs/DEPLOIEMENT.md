@@ -25,12 +25,16 @@ Chaque modification poussée sur la branche principale est redéployée automati
 
 ## Option tout-en-un : Railway (ou Render, Fly.io, Scaleway…)
 
-Le `Dockerfile` fourni construit une image autonome qui applique les migrations au démarrage.
+Le `Dockerfile` fourni construit une image autonome qui, à chaque démarrage, applique les migrations puis lance le serveur. `railway.json` configure la sonde de santé (`/api/health`).
 
-1. Créer un projet Railway depuis le dépôt GitHub (Railway détecte le Dockerfile).
-2. Ajouter un service **PostgreSQL** ; référencer son URL dans `DATABASE_URL`.
-3. Photos : soit un **volume** monté sur `/app/storage` avec `STORAGE_DRIVER=local` et `LOCAL_STORAGE_DIR=/app/storage`, soit un bucket S3.
-4. Renseigner `SESSION_SECRET`, configurer la sonde de santé sur `/api/health`.
+1. Sur [railway.com](https://railway.com), se connecter avec GitHub, puis *New Project → Deploy from GitHub repo* et choisir le dépôt (et la branche).
+2. Dans le projet : *+ Create → Database → PostgreSQL*.
+3. Dans le service de l'app, onglet *Variables* :
+   - `DATABASE_URL` = `${{Postgres.DATABASE_URL}}` (référence proposée par Railway) ;
+   - `SESSION_SECRET` = une longue chaîne aléatoire (`openssl rand -base64 48`) ;
+   - pour une **instance de test** uniquement : `SEED_DEMO=true` charge les comptes et éléments de démonstration au premier démarrage, si la base est vide.
+4. Photos : clic droit sur le service → *Attach volume*, point de montage `/app/storage` (le stockage local par défaut écrit dans ce dossier). Sans volume, les photos seraient perdues à chaque redéploiement. Alternative : un bucket S3 (`STORAGE_DRIVER=s3`).
+5. Onglet *Settings → Networking → Generate Domain* : Railway fournit l'adresse publique en HTTPS.
 
 ## Premier super user
 
@@ -41,7 +45,7 @@ DATABASE_URL="<url de production>" npx tsx scripts/create-admin.ts "Prénom Nom"
 # le mot de passe est demandé de façon interactive
 ```
 
-Ne lancez **jamais** `npm run db:seed` en production : il efface les données.
+Ne lancez **jamais** `npm run db:seed` en production : il efface les données. `SEED_DEMO=true`, lui, n'agit que sur une base sans aucun compte, mais n'a pas sa place sur l'instance réelle : retirez-le une fois les tests terminés.
 
 ## Vérifications après déploiement
 
