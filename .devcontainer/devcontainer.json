@@ -1,0 +1,28 @@
+// Instance de test de Palette dans GitHub Codespaces : tout s'installe et démarre seul.
+// Mode d'emploi : .devcontainer/LISEZMOI.md
+{
+  "name": "Palette (test)",
+  "dockerComposeFile": "docker-compose.yml",
+  "service": "app",
+  "workspaceFolder": "/workspaces/${localWorkspaceFolderBasename}",
+  "forwardPorts": [3000],
+  "portsAttributes": {
+    "3000": { "label": "Palette", "onAutoForward": "openBrowser" }
+  },
+  "otherPortsAttributes": { "onAutoForward": "silent" },
+  // Une seule fois, à la création : dépendances, base, données de démonstration, compilation.
+  "postCreateCommand": "bash .devcontainer/palette.sh prepare",
+  // À chaque ouverture : lance l'app (et la met à jour si une nouvelle version a été publiée).
+  "postAttachCommand": "bash .devcontainer/palette.sh start",
+  "customizations": {
+    "codespaces": {
+      "openFiles": [".devcontainer/LISEZMOI.md"]
+    },
+    "vscode": {
+      "settings": {
+        "workbench.startupEditor": "none",
+        "workbench.editorAssociations": { "*.md": "vscode.markdown.preview.editor" }
+      }
+    }
+  }
+}

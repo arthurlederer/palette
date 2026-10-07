@@ -11,6 +11,12 @@ Objectif : ne plus refabriquer un élément existant (≈ 3 500 € par incident
 |---|---|---|
 | ![Tableau de bord](docs/images/tableau-de-bord.png) | ![Connexion mobile](docs/images/mobile-connexion.png) | ![Déclaration mobile](docs/images/mobile-declarer.png) |
 
+## Essayer Palette sans rien installer
+
+[![Ouvrir dans GitHub Codespaces](https://github.com/codespaces/badge.svg)](https://codespaces.new/arthurlederer/palette?quickstart=1)
+
+Le bouton ci-dessus ouvre un ordinateur temporaire chez GitHub (compte GitHub gratuit suffisant) : Palette s'y installe, charge les données de démonstration et démarre seule, puis s'ouvre dans un nouvel onglet (5 à 8 minutes la première fois). Mode d'emploi, comptes de test et accès depuis un téléphone : [.devcontainer/LISEZMOI.md](.devcontainer/LISEZMOI.md).
+
 ## Documentation
 
 | Document | Pour qui |

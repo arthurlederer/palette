@@ -36,6 +36,13 @@ Le `Dockerfile` fourni construit une image autonome qui, à chaque démarrage, a
 4. Photos : clic droit sur le service → *Attach volume*, point de montage `/app/storage` (le stockage local par défaut écrit dans ce dossier). Sans volume, les photos seraient perdues à chaque redéploiement. Alternative : un bucket S3 (`STORAGE_DRIVER=s3`).
 5. Onglet *Settings → Networking → Generate Domain* : Railway fournit l'adresse publique en HTTPS.
 
+## Instance de test sans hébergeur : GitHub Codespaces
+
+Pour une démonstration, sans base ni hébergeur à configurer : bouton *Ouvrir dans GitHub Codespaces* du README (lien `https://codespaces.new/arthurlederer/palette?quickstart=1`).
+Le dossier `.devcontainer/` décrit l'environnement : un conteneur Node 22 et un PostgreSQL 16, puis `.devcontainer/palette.sh` installe, migre, charge les données de démonstration, compile et lance l'app sur le port 3000. À chaque ouverture, le script récupère la dernière version de la branche et ne refait que les étapes nécessaires.
+
+Le relais de ports de Codespaces réécrit l'en-tête `Host` ; le script renseigne donc `ALLOWED_ORIGINS` avec l'adresse du codespace, sans quoi Next.js refuserait les formulaires. Cette instance n'est pas faite pour la production : elle se met en veille après 30 minutes d'inactivité et ses mots de passe sont ceux, publics, de la démo.
+
 ## Premier super user
 
 Sur une base vide, créer le premier compte TGE avec le script fourni (les suivants se créent depuis l'application, menu *Équipe TGE*) :
