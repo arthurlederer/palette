@@ -7,6 +7,10 @@ services:
       - ../..:/workspaces:cached
     command: sleep infinity
     network_mode: service:db
+    environment:
+      # Adresse publique du codespace (utilisée par palette.sh pour l'afficher et l'autoriser).
+      CODESPACE_NAME: ${CODESPACE_NAME:-}
+      GITHUB_CODESPACES_PORT_FORWARDING_DOMAIN: ${GITHUB_CODESPACES_PORT_FORWARDING_DOMAIN:-app.github.dev}
 
   db:
     image: postgres:16

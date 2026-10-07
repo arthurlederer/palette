@@ -7,11 +7,14 @@
   "workspaceFolder": "/workspaces/${localWorkspaceFolderBasename}",
   "forwardPorts": [3000],
   "portsAttributes": {
-    "3000": { "label": "Palette", "onAutoForward": "openBrowser" }
+    // « notify » : notification avec un bouton « Open in Browser » (une ouverture automatique serait bloquée
+    // par le navigateur). Pas d'aperçu dans l'éditeur : la session de Palette n'y fonctionne pas.
+    "3000": { "label": "Palette", "onAutoForward": "notify" }
   },
   "otherPortsAttributes": { "onAutoForward": "silent" },
   // Une seule fois, à la création : dépendances, base, données de démonstration, compilation.
-  "postCreateCommand": "bash .devcontainer/palette.sh prepare",
+  // Un échec n'interrompt pas la suite : « start » reprend les étapes manquantes dans un terminal visible.
+  "postCreateCommand": "bash .devcontainer/palette.sh prepare || true",
   // À chaque ouverture : lance l'app (et la met à jour si une nouvelle version a été publiée).
   "postAttachCommand": "bash .devcontainer/palette.sh start",
   "customizations": {

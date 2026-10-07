@@ -7,6 +7,11 @@ const PUBLIC_PATHS = ["/connexion", "/api/health", "/manifest.webmanifest", "/ic
 
 export async function middleware(req: NextRequest) {
   const { pathname } = req.nextUrl;
+  // Instance de test Codespaces : une ligne par page consultée (les photos exceptées), car seule une sortie
+  // dans le terminal retarde la mise en veille du codespace. Désactivé partout ailleurs.
+  if (process.env.PALETTE_LOG_REQUESTS === "1" && !pathname.startsWith("/api/photos/")) {
+    console.log(`[Palette] ${req.method} ${pathname}`);
+  }
   if (PUBLIC_PATHS.some((p) => pathname === p || pathname.startsWith(p + "/"))) return NextResponse.next();
 
   const session = await verifySession(req.cookies.get(SESSION_COOKIE)?.value);

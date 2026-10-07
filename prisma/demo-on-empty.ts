@@ -12,7 +12,7 @@ async function main() {
   try {
     const users = await db.user.count();
     if (users > 0) {
-      console.log("SEED_DEMO : la base contient déjà des comptes, aucune donnée de démonstration ajoutée.");
+      console.log("SEED_DEMO : comptes déjà présents, rien à ajouter.");
       return;
     }
     console.log("SEED_DEMO : base vide, chargement des données de démonstration…");

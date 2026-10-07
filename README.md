@@ -15,7 +15,9 @@ Objectif : ne plus refabriquer un élément existant (≈ 3 500 € par incident
 
 [![Ouvrir dans GitHub Codespaces](https://github.com/codespaces/badge.svg)](https://codespaces.new/arthurlederer/palette?quickstart=1)
 
-Le bouton ci-dessus ouvre un ordinateur temporaire chez GitHub (compte GitHub gratuit suffisant) : Palette s'y installe, charge les données de démonstration et démarre seule, puis s'ouvre dans un nouvel onglet (5 à 8 minutes la première fois). Mode d'emploi, comptes de test et accès depuis un téléphone : [.devcontainer/LISEZMOI.md](.devcontainer/LISEZMOI.md).
+Le bouton ci-dessus ouvre un ordinateur temporaire chez GitHub (un compte GitHub gratuit suffit, sans carte bancaire). La première fois, cliquez sur **Create a new codespace** : Palette s'y installe, charge les données de démonstration et démarre seule (5 à 8 minutes). Les fois suivantes, le même bouton propose **Resume this codespace** : choisissez-le pour retrouver vos données et la même adresse (**Create a new one** repartirait de zéro).
+
+Mode d'emploi, comptes de test et accès depuis un téléphone : [.devcontainer/LISEZMOI.md](.devcontainer/LISEZMOI.md).
 
 ## Documentation
 

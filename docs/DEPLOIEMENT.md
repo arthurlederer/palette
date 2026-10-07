@@ -32,16 +32,21 @@ Le `Dockerfile` fourni construit une image autonome qui, à chaque démarrage, a
 3. Dans le service de l'app, onglet *Variables* :
    - `DATABASE_URL` = `${{Postgres.DATABASE_URL}}` (référence proposée par Railway) ;
    - `SESSION_SECRET` = une longue chaîne aléatoire (`openssl rand -base64 48`) ;
+   - `PORT` = `3000` : Railway impose sinon son propre port (souvent 8080), qui peut différer du port visé par le domaine public ;
    - pour une **instance de test** uniquement : `SEED_DEMO=true` charge les comptes et éléments de démonstration au premier démarrage, si la base est vide.
 4. Photos : clic droit sur le service → *Attach volume*, point de montage `/app/storage` (le stockage local par défaut écrit dans ce dossier). Sans volume, les photos seraient perdues à chaque redéploiement. Alternative : un bucket S3 (`STORAGE_DRIVER=s3`).
-5. Onglet *Settings → Networking → Generate Domain* : Railway fournit l'adresse publique en HTTPS.
+5. Onglet *Settings → Networking → Generate Domain*, port `3000` : Railway fournit l'adresse publique en HTTPS.
+
+Si Railway affiche « Could not load branches » ou « Auto deploy unavailable » (*Settings → Source*), il n'a plus accès au dépôt : sur [github.com/settings/installations](https://github.com/settings/installations), *Railway → Configure → Repository access*, ajouter le dépôt, puis *Retry* dans Railway.
 
 ## Instance de test sans hébergeur : GitHub Codespaces
 
 Pour une démonstration, sans base ni hébergeur à configurer : bouton *Ouvrir dans GitHub Codespaces* du README (lien `https://codespaces.new/arthurlederer/palette?quickstart=1`).
 Le dossier `.devcontainer/` décrit l'environnement : un conteneur Node 22 et un PostgreSQL 16, puis `.devcontainer/palette.sh` installe, migre, charge les données de démonstration, compile et lance l'app sur le port 3000. À chaque ouverture, le script récupère la dernière version de la branche et ne refait que les étapes nécessaires.
 
-Le relais de ports de Codespaces réécrit l'en-tête `Host` ; le script renseigne donc `ALLOWED_ORIGINS` avec l'adresse du codespace, sans quoi Next.js refuserait les formulaires. Cette instance n'est pas faite pour la production : elle se met en veille après 30 minutes d'inactivité et ses mots de passe sont ceux, publics, de la démo.
+Le relais de ports de Codespaces remplace l'en-tête `Origin` envoyé par le navigateur par `http://localhost:3000` et transmet l'adresse publique dans `X-Forwarded-Host` (comportement constaté par la communauté, non documenté par GitHub). Sans réglage, Next.js refuserait donc les formulaires : le script renseigne `ALLOWED_ORIGINS` avec `localhost:3000` et l'adresse exacte du codespace, sans joker. Il affiche aussi une ligne par page consultée (`PALETTE_LOG_REQUESTS=1`), car seule une sortie dans le terminal retarde la mise en veille du codespace.
+
+Cette instance n'est pas faite pour la production : elle se met en veille après 30 minutes sans activité, s'arrête au bout de 12 heures, est supprimée après 30 jours sans ouverture, et ses mots de passe sont ceux, publics, de la démo.
 
 ## Premier super user
 
