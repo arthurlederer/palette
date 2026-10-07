@@ -39,3 +39,12 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+# Palette
+/storage
+/storage-e2e
+/reports
+/test-results
+/playwright-report
+/tests/fixtures/element.jpg
+!.env.example

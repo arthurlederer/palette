@@ -1,0 +1,7 @@
+node_modules
+.next
+.env
+storage
+storage-e2e
+reports
+test-results

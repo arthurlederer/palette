@@ -1,0 +1,117 @@
+// Palette : modèle de données.
+// Un élément de stand (Element) est stocké chez un menuisier (Carpenter).
+// Les comptes (User) sont soit super users TGE (ADMIN), soit rattachés à un menuisier (CARPENTER).
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+enum Role {
+  ADMIN
+  CARPENTER
+}
+
+enum HistoryAction {
+  CREATED
+  UPDATED
+  DELETED
+}
+
+model User {
+  id           String    @id @default(cuid())
+  email        String    @unique
+  phone        String?   @unique
+  name         String
+  passwordHash String
+  role         Role
+  active       Boolean   @default(true)
+  carpenterId  String?
+  carpenter    Carpenter? @relation(fields: [carpenterId], references: [id], onDelete: Cascade)
+  createdAt    DateTime  @default(now())
+  updatedAt    DateTime  @updatedAt
+
+  elementsCreated Element[]        @relation("ElementCreatedBy")
+  historyEntries  ElementHistory[]
+
+  @@index([carpenterId])
+}
+
+model Carpenter {
+  id          String    @id @default(cuid())
+  name        String    @unique // raison sociale de l'atelier
+  contactName String
+  email       String
+  phone       String
+  address     String?
+  notes       String?
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+
+  users    User[]
+  elements Element[]
+}
+
+model Client {
+  id        String    @id @default(cuid())
+  name      String    @unique
+  createdAt DateTime  @default(now())
+  elements  Element[]
+}
+
+model Element {
+  id          String    @id @default(cuid())
+  // Dimensions en centimètres : L (longueur) x H (hauteur) x P (profondeur)
+  lengthCm    Int
+  heightCm    Int
+  depthCm     Int
+  project     String
+  location    String
+  notes       String?
+  photoKey    String
+  thumbKey    String
+  clientId    String
+  client      Client    @relation(fields: [clientId], references: [id], onDelete: Restrict)
+  carpenterId String
+  carpenter   Carpenter @relation(fields: [carpenterId], references: [id], onDelete: Restrict)
+  createdById String?
+  createdBy   User?     @relation("ElementCreatedBy", fields: [createdById], references: [id], onDelete: SetNull)
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+
+  history ElementHistory[]
+
+  @@index([carpenterId])
+  @@index([clientId])
+  @@index([createdAt])
+}
+
+// Journal des modifications. elementId est conservé après suppression (SetNull)
+// pour garder une trace des modérations.
+model ElementHistory {
+  id        String        @id @default(cuid())
+  elementId String?
+  element   Element?      @relation(fields: [elementId], references: [id], onDelete: SetNull)
+  action    HistoryAction
+  // { champ: { from, to } } pour UPDATED, instantané complet pour CREATED / DELETED
+  changes   Json
+  summary   String
+  userId    String?
+  user      User?         @relation(fields: [userId], references: [id], onDelete: SetNull)
+  createdAt DateTime      @default(now())
+
+  @@index([elementId])
+}
+
+// Tentatives de connexion échouées, pour limiter le brute force.
+model LoginAttempt {
+  id         String   @id @default(cuid())
+  identifier String
+  createdAt  DateTime @default(now())
+
+  @@index([identifier, createdAt])
+}

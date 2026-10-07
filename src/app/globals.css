@@ -1,26 +1,91 @@
 @import "tailwindcss";
 
+/*
+ * Charte Palette, alignée sur thegoodexperience.com :
+ * noir et blanc, typographie sans-serif sobre, beaucoup d'air, un seul accent de couleur.
+ * Toutes les couleurs passent par ces variables pour pouvoir ajuster la charte en un seul endroit.
+ */
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --ink: #111111;
+  --ink-soft: #3d3d3d;
+  --muted: #6b6b6b;
+  --line: #e6e6e6;
+  --paper: #ffffff;
+  --paper-soft: #f6f5f3;
+  --accent: #ff5a1f;
+  --accent-ink: #ffffff;
+  --danger: #c62828;
+  --success: #1f7a4d;
+  color-scheme: light;
 }
 
 @theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+  --color-ink: var(--ink);
+  --color-ink-soft: var(--ink-soft);
+  --color-muted: var(--muted);
+  --color-line: var(--line);
+  --color-paper: var(--paper);
+  --color-paper-soft: var(--paper-soft);
+  --color-accent: var(--accent);
+  --color-accent-ink: var(--accent-ink);
+  --color-danger: var(--danger);
+  --color-success: var(--success);
+  --font-sans: "Inter Variable", ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+html {
+  -webkit-text-size-adjust: 100%;
 }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  background: var(--paper);
+  color: var(--ink);
+  font-family: var(--font-sans);
+  font-feature-settings: "ss01", "cv11";
+}
+
+@layer components {
+  .btn {
+    @apply inline-flex min-h-12 items-center justify-center gap-2 rounded-full px-6 text-[15px] font-medium transition
+      focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent disabled:cursor-not-allowed disabled:opacity-50;
+  }
+  .btn-primary {
+    @apply bg-ink text-paper hover:bg-ink-soft;
+  }
+  .btn-accent {
+    @apply bg-accent text-accent-ink hover:brightness-95;
+  }
+  .btn-outline {
+    @apply border border-ink bg-paper text-ink hover:bg-paper-soft;
+  }
+  .btn-ghost {
+    @apply text-ink hover:bg-paper-soft;
+  }
+  .btn-danger {
+    @apply border border-danger bg-paper text-danger hover:bg-red-50;
+  }
+  .btn-sm {
+    @apply min-h-10 px-4 text-sm;
+  }
+  .input {
+    @apply block min-h-12 w-full rounded-xl border border-line bg-paper px-4 text-base text-ink placeholder:text-muted
+      focus:border-ink focus:outline-none focus:ring-2 focus:ring-ink/10 aria-[invalid=true]:border-danger;
+  }
+  .label {
+    @apply mb-1.5 block text-sm font-medium text-ink;
+  }
+  .card {
+    @apply rounded-2xl border border-line bg-paper;
+  }
+  .eyebrow {
+    @apply text-xs font-semibold uppercase tracking-[0.14em] text-muted;
+  }
+  .chip {
+    @apply inline-flex min-h-8 items-center gap-1.5 rounded-full border border-line bg-paper-soft px-3 text-sm;
+  }
+}
+
+/* Respect des safe areas sur iPhone (barre d'onglets en bas). */
+.pb-safe {
+  padding-bottom: max(env(safe-area-inset-bottom), 0px);
 }
