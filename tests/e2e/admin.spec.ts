@@ -18,7 +18,9 @@ test.describe("authentification", () => {
 
   test("met en avant le logo The Good Experience", async ({ page }) => {
     await page.goto("/connexion");
-    await expect(page.getByLabel("The Good Experience").first()).toBeVisible();
+    await expect(page.getByRole("img", { name: "The Good Experience" }).first()).toBeVisible();
+    const logoLoaded = await page.getByRole("img", { name: "The Good Experience" }).first().evaluate((img: HTMLImageElement) => img.complete && img.naturalWidth > 0);
+    expect(logoLoaded).toBe(true);
   });
 });
 

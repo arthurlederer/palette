@@ -1,11 +1,11 @@
 # Rapport de tests · Palette
 
-Généré le 07/10/2026 14:31:18.
+Généré le 07/10/2026 14:48:03.
 
 | Suite | Résultat | Durée |
 |---|---|---|
 | Unitaires + intégration (Vitest) | 79 / 79 réussis | 37 s |
-| Bout en bout (Playwright : desktop, mobile portrait, mobile paysage) | 27 / 27 réussis | 74 s |
+| Bout en bout (Playwright : desktop, mobile portrait, mobile paysage) | 27 / 27 réussis | 80 s |
 
 **Couverture du code métier** (src/lib, src/server) : lignes 87.96 %, fonctions 85.07 %, branches 89.09 %.
 

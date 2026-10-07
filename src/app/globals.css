@@ -2,7 +2,7 @@
 
 /*
  * Charte Palette, alignée sur thegoodexperience.com :
- * noir et blanc, typographie sans-serif sobre, beaucoup d'air, un seul accent de couleur.
+ * noir et blanc, typographie sans-serif sobre, beaucoup d'air, un seul accent : le rose du logo.
  * Toutes les couleurs passent par ces variables pour pouvoir ajuster la charte en un seul endroit.
  */
 :root {
@@ -12,7 +12,7 @@
   --line: #e6e6e6;
   --paper: #ffffff;
   --paper-soft: #f6f5f3;
-  --accent: #ff5a1f;
+  --accent: #df4f84; /* rose du « g » du logo TGE */
   --accent-ink: #ffffff;
   --danger: #c62828;
   --success: #1f7a4d;

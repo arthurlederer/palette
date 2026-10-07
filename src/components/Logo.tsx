@@ -1,18 +1,24 @@
 /**
- * Logo The Good Experience, mis en avant dans l'app.
- * Version texte en attendant le fichier officiel : pour utiliser le logo fourni par TGE,
- * déposer le fichier dans public/brand/ et remplacer le contenu de ce composant par une balise <img>.
+ * Logo officiel The Good Experience, mis en avant dans toute l'app.
+ * Deux déclinaisons générées depuis brand/logo-tge.avif par scripts/brand-assets.mjs :
+ * texte noir pour fond clair, texte blanc (original) pour fond sombre.
  */
-export function Logo({ size = "md", inverted = false }: { size?: "sm" | "md" | "lg"; inverted?: boolean }) {
-  const text = { sm: "text-[13px]", md: "text-[15px]", lg: "text-2xl" }[size];
+const HEIGHT = { sm: 32, md: 44, lg: 56 } as const;
+const RATIO = 529 / 160;
+
+export function Logo({ size = "md", inverted = false }: { size?: keyof typeof HEIGHT; inverted?: boolean }) {
+  const h = HEIGHT[size];
   return (
-    <span
-      className={`inline-flex flex-col leading-[0.95] font-extrabold uppercase tracking-[-0.02em] ${text} ${inverted ? "text-paper" : "text-ink"}`}
-      aria-label="The Good Experience"
-    >
-      <span>The Good</span>
-      <span>Experience</span>
-    </span>
+    // eslint-disable-next-line @next/next/no-img-element
+    <img
+      src={inverted ? "/brand/logo-light.png" : "/brand/logo-dark.png"}
+      alt="The Good Experience"
+      width={Math.round(h * RATIO)}
+      height={h}
+      className="block max-w-full shrink-0 self-start"
+      style={{ height: h, width: "auto" }}
+      fetchPriority="high"
+    />
   );
 }
 

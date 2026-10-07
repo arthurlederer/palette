@@ -101,9 +101,9 @@ Une seule application web, responsive, sert les deux publics. Le navigateur comp
 
 ## ADR 9 · Charte graphique
 
-**Choix.** Reprise des codes de thegoodexperience.com : noir et blanc, typographie sans-serif géométrique (Inter, auto-hébergée), espacements généreux, boutons pleins arrondis, un seul accent de couleur pour les actions principales. Le logo TGE est présent sur la page de connexion, dans la barre latérale et l'en-tête mobile. Toutes les couleurs sont des variables CSS dans `src/app/globals.css` : ajuster la charte se fait à un seul endroit.
+**Choix.** Reprise des codes de thegoodexperience.com : noir et blanc, typographie sans-serif géométrique (Inter, auto-hébergée), espacements généreux, boutons pleins arrondis, un seul accent de couleur pour les actions principales : le rose `#df4f84` du « g » du logo. Le logo officiel est présent sur la page de connexion, dans la barre latérale et l'en-tête mobile ; le monogramme « g » sert d'icône d'application. Toutes les couleurs sont des variables CSS dans `src/app/globals.css` : ajuster la charte se fait à un seul endroit.
 
-**À compléter.** Le logo est une version texte en attendant le fichier officiel (voir `src/components/Logo.tsx`), et l'accent orange est une proposition à valider.
+**Logo.** Le fichier source est `brand/logo-tge.avif` (texte blanc, « g » rose, fond transparent). `node scripts/brand-assets.mjs brand/logo-tge.avif public/brand src/app` génère la version texte noir pour fond clair, la version d'origine pour fond sombre et les icônes. À relancer si le logo change.
 
 ## ADR 10 · Tests à trois niveaux
 

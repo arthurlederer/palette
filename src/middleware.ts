@@ -3,7 +3,7 @@ import { SESSION_COOKIE, verifySession } from "@/lib/auth/token";
 
 // Première barrière : toute page hors connexion exige un jeton de session valide.
 // Les droits fins (rôle, périmètre menuisier) sont vérifiés côté serveur dans chaque page et action.
-const PUBLIC_PATHS = ["/connexion", "/api/health", "/manifest.webmanifest", "/icon.svg", "/apple-icon.png"];
+const PUBLIC_PATHS = ["/connexion", "/api/health", "/manifest.webmanifest", "/icon.png", "/apple-icon.png", "/brand"];
 
 export async function middleware(req: NextRequest) {
   const { pathname } = req.nextUrl;

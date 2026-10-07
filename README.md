@@ -7,9 +7,9 @@ Objectif : ne plus refabriquer un élément existant (≈ 3 500 € par incident
 - **Menuisiers** (mobile) : déclarent un élément en une seule page depuis l'atelier (photo, client, dimensions L × H × P, projet, emplacement), retrouvent, modifient ou suppriment leurs propres déclarations. Ils ne voient jamais celles des autres ateliers.
 - **Équipes TGE** (desktop et mobile) : tableau de bord, recherche multi-critères (client, plages de dimensions, projet, menuisier, mots-clés), fiche détaillée avec contact du menuisier et historique, export CSV, gestion des menuisiers et des comptes, modération.
 
-| Tableau de bord | Déclaration (mobile) |
-|---|---|
-| ![Tableau de bord](docs/images/tableau-de-bord.png) | ![Déclaration mobile](docs/images/mobile-declarer.png) |
+| Tableau de bord | Connexion (mobile) | Déclaration (mobile) |
+|---|---|---|
+| ![Tableau de bord](docs/images/tableau-de-bord.png) | ![Connexion mobile](docs/images/mobile-connexion.png) | ![Déclaration mobile](docs/images/mobile-declarer.png) |
 
 ## Documentation
 
@@ -94,4 +94,5 @@ src/
   middleware.ts      redirection vers la connexion
 tests/               unit, integration, e2e
 docs/                guides, architecture, déploiement, rapport de tests
+brand/               logo source TGE (déclinaisons générées par scripts/brand-assets.mjs)
 ```
